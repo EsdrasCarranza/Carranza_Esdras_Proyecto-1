@@ -32,7 +32,7 @@ public class Carranza_esdras_tienda {
         double cant_efectivo = 0, kilos_pro = 0, total_com = 0, cant_azucar = 0, cant_avena = 0, cant_trigo = 0, cant_maiz = 0, kilos_ven = 0, subtotal_venta = 0, descuento = 0,
                 impuesto = 0, total_venta = 0, ganacias = 0, total_compras = 0, total_ventas = 0, mayor_compra = 0, kilos_mayorcompra = 0, mayor_venta = 0, kilos_mayorventa = 0,
                 kilos_maiz = 0, kilos_trigo = 0, kilos_azucar = 0, kilos_avena = 0, kilos_mayor = 0, subtotal_total = 0, descuento_visual = 0,
-                promedio_ventas = 0, promedio_compras = 0;
+                promedio_ventas = 0, promedio_compras = 0, volumen_compras = 0, volumen_ventas = 0;
         int opcion_pro = 0, caja_abierta = 0;
         //inicio del bucle del menu principal
         while (opcion != 6) {
@@ -47,15 +47,18 @@ public class Carranza_esdras_tienda {
                 //apertura de la primera opcion abrir caja 
             } else if (opcion == 1) {
                 if (caja_abierta == 0) {
+                    //intrucciones
                     System.out.println("En este seccion, ingrese la cantidad de efectivo que usted dispone, esta misma cambiara cuando se realizen compras o ventas.");
                     System.out.println("ingrese la cantidad de efectivo con la que dispone: ");
                     cant_efectivo = info.nextDouble();
+                    //error por si el usuario ingresa dinero negativo 
                     if (cant_efectivo <= 0) {
                         System.out.println(" ");
                         System.out.println("ERROR. su cantidad de efectivo no puede ser 0 o ser negativa");
                         System.out.println(" ");
 
                     } else {
+                        //se muestra el saldo que hay en la caja 
                         System.out.println(" ");
                         System.out.println("El saldo ingresado es de: " + cant_efectivo);
                         System.out.println(" ");
@@ -63,13 +66,16 @@ public class Carranza_esdras_tienda {
                     }
 
                 } else if (caja_abierta > 0) {
+                    // por si se desea ingresar mas efectivo una vez la caja este abierta
                     System.out.println("Su saldo actual es de : " + cant_efectivo);
                     System.out.println("desea ingresar mas dinero a la cuenta, ingrese cuanto dinero va  adicionar: ");
                     int extra_dinero = info.nextInt();
+                    // otro error por si al caso ingresa otro valor en 0 
                     if (extra_dinero < 0) {
 
                         System.out.println("ERROR. no se puede ingresar una cantidad menor a 0");
                     } else {
+                        //caja actualizada con dinero 
                         cant_efectivo += extra_dinero;
                         System.out.println(" ");
                         System.out.println("Cantidad de caja actualizada");
@@ -80,10 +86,11 @@ public class Carranza_esdras_tienda {
                 }
 
             } else if (opcion == 3) {
-
+                //mensaje por si se desea abrir compras antes de abrir caja 
                 if (caja_abierta == 0) {
                     System.out.println("Abrir caja antes de ingresar a compras");
                 } else {
+                    //menu principal y solicitud de producto 
                     System.out.println(" ");
                     System.out.println("Bienvenido a la seccion de compras, en este seccion se provee una cantidad de productos, para suplir la seccion de ventas.");
                     System.out.println("Las siguientes son opciones de productos  a nuestro proveedores, dependiendo  del tipo de proveedor, usted podra comprar los siguientes productos");
@@ -99,6 +106,7 @@ public class Carranza_esdras_tienda {
                     System.out.println("1.Tipo A" + "\n" + "2.Tipo B" + "\n" + "3.Tipo C");
                     System.out.println(" ");
                     opcion_pro = info.nextInt();
+                    // error por si se ingresa un tipo de proveedor incorrecto
                     if (opcion_pro > 3 || opcion_pro < 1) {
                         System.out.println("Error. Proveedor no existente");
                     } else if (opcion_pro == 1) {
@@ -107,7 +115,7 @@ public class Carranza_esdras_tienda {
                         System.out.println("El  proveedor que usted a seleccionado es el A");
                         System.out.println("Ingrese el codigo del producto requerido (en todo caso de no querer realizar la compra presionar 0)");
                         producto = info.nextInt();
-
+                        // validacion por si se quiere cancelar la compra
                         if (producto == 0) {
                             System.out.println("----COMPRA CANCELADA----");
                         } else if (producto == 1) {
@@ -118,16 +126,18 @@ public class Carranza_esdras_tienda {
                             System.out.println("El producto que usted selecciono es Azucar");
                             System.out.println("Ingrese los kilos que necesite(en todo caso de no querer realizar la compra presionar 0).");
                             kilos_pro = info.nextDouble();
-
+                            //error por si los kilos de producto es 0 o menor a 0 
                             if (kilos_pro < 0) {
                                 System.out.println("Error. NO SE PUEDE COMPRAR PRODUCTOS NEGATIVOS");
+                                //otro por si al caso 
                             } else if (kilos_pro == 0) {
                                 System.out.println("----COMPRA CANCELADA----");
 
                             } else {
                                 total_com = kilos_pro * 25;
-
+                                // validacion por si al caso no se puede pagar 
                                 if (total_com > cant_efectivo) {
+
                                     System.out.println(" ");
                                     System.out.println("No Se Puede Pagar Compra");
                                     System.out.println("el total de su compra es: " + total_com);
@@ -136,6 +146,7 @@ public class Carranza_esdras_tienda {
                                     double posible_compra = total_com - cant_efectivo_calculo;
                                     System.out.println("Para completar esa compra le hacen falta : " + posible_compra + " Lempiras.");
                                     System.out.println(" ");
+                                    // validacion por si si se puede pagar 
                                 } else if (total_com < cant_efectivo) {
                                     cant_efectivo = cant_efectivo - total_com;
                                     System.out.println(" ");
@@ -144,7 +155,7 @@ public class Carranza_esdras_tienda {
                                     System.out.println("El total de su compra es de " + total_com);
                                     System.out.println("Cantidad de capital actual: " + cant_efectivo);
                                     System.out.println(" ");
-
+                                    // se le suma las cantidad de compras y se va sumando al almacen
                                     cant_compras++;
 
                                     cant_azucar = cant_azucar + kilos_pro;
@@ -152,7 +163,7 @@ public class Carranza_esdras_tienda {
                             }
 
                         } else if (producto == 4) {
-
+                            // lo mismo en todos los productos
                             nom_producto = "Maiz";
                             System.out.println(" ");
                             System.out.println("El producto que usted selecciono es Maiz ");
@@ -187,7 +198,7 @@ public class Carranza_esdras_tienda {
 
                                 }
                             }
-
+                            //error por si el proveedor esta mal 
                         } else {
                             System.out.println("Error.Proveedor no vende dicho Producto");
                         }
@@ -323,6 +334,7 @@ public class Carranza_esdras_tienda {
                         }
 
                     }
+                    // aqui se busca cual fue la mayor venta para los reportes 
                     total_compras += total_com;
 
                     if (total_com > mayor_compra) {
@@ -334,15 +346,15 @@ public class Carranza_esdras_tienda {
                 }
 
             } else if (opcion == 2) {
-
+                // se valida si esta abierta la caja 
                 if (caja_abierta == 0) {
                     System.out.println("Abrir caja antes de ingresar ventas");
                 } else {
-
+                    // se valida si no hay ninguna compra antes de entrar 
                     if (cant_compras == 0) {
                         System.out.println("No poseemos ningun producto.");
                     } else {
-
+                        //menu de ventas.
                         System.out.println("Bienvenido a la seccion de ventas");
                         System.out.println("En este seccion se vende una cantidad de productos, para suplir las  necesidades del cliente.");
                         System.out.println("Las siguientes son opciones de nuestro tipo de clientes, dependiendo  del tipo de cliente, usted podra comprar los siguientes productos");
@@ -384,7 +396,7 @@ public class Carranza_esdras_tienda {
                                     } else if (cant_azucar > 1) {
                                         System.out.println("ingrese los kilos que requiere(en todo caso de no querer realizar la venta presionar 0): ");
                                         kilos_ven = info.nextDouble();
-                                        if (kilos_ven < 0) {
+                                        if (kilos_ven <= -1) {
                                             System.out.println("ERROR. NO INGRESAR NEGATIVOS");
                                         } else if (kilos_ven == 0) {
                                             System.out.println("----VENTA CANCELADA----");
@@ -438,7 +450,7 @@ public class Carranza_esdras_tienda {
                                     } else if (cant_avena > 1) {
                                         System.out.println("ingrese los kilos que requiere(en todo caso de no querer realizar la venta presionar 0): ");
                                         kilos_ven = info.nextDouble();
-                                        if (kilos_ven < 0) {
+                                        if (kilos_ven <= -1) {
                                             System.out.println("ERROR. NO INGRESAR NEGATIVOS");
                                         } else if (kilos_ven == 0) {
                                             System.out.println("----VENTA CANCELADA----");
@@ -493,7 +505,7 @@ public class Carranza_esdras_tienda {
 
                                         System.out.println("ingrese los kilos que requiere (en todo caso de no querer realizar la venta presionar 0):");
                                         kilos_ven = info.nextDouble();
-                                        if (kilos_ven < 0) {
+                                        if (kilos_ven <= -1) {
                                             System.out.println("ERROR. NO INGRESAR NEGATIVOS");
                                         } else if (kilos_ven == 0) {
                                             System.out.println("----VENTA CANCELADA----");
@@ -548,7 +560,7 @@ public class Carranza_esdras_tienda {
 
                                         System.out.println("ingrese los kilos que requiere(en todo caso de no querer realizar la venta presionar 0):");
                                         kilos_ven = info.nextDouble();
-                                        if (kilos_ven < 0) {
+                                        if (kilos_ven <= -1) {
                                             System.out.println("ERROR. NO INGRESAR NEGATIVOS");
                                         } else if (kilos_ven == 0) {
                                             System.out.println("----VENTA CANCELADA----");
@@ -616,7 +628,7 @@ public class Carranza_esdras_tienda {
                                     } else if (cant_azucar > 1) {
                                         System.out.println("ingrese los kilos que requiere(en todo caso de no querer realizar la venta presionar 0): ");
                                         kilos_ven = info.nextDouble();
-                                        if (kilos_ven < 0) {
+                                        if (kilos_ven <= -1) {
                                             System.out.println("ERROR. NO INGRESAR NEGATIVOS");
                                         } else if (kilos_ven == 0) {
                                             System.out.println("----VENTA CANCELADA----");
@@ -670,7 +682,7 @@ public class Carranza_esdras_tienda {
                                     } else if (cant_avena > 1) {
                                         System.out.println("ingrese los kilos que requiere(en todo caso de no querer realizar la venta presionar 0):");
                                         kilos_ven = info.nextDouble();
-                                        if (kilos_ven < 0) {
+                                        if (kilos_ven <= -1) {
                                             System.out.println("ERROR. NO INGRESAR NEGATIVOS");
                                         } else if (kilos_ven == 0) {
                                             System.out.println("----VENTA CANCELADA----");
@@ -724,7 +736,7 @@ public class Carranza_esdras_tienda {
 
                                         System.out.println("ingrese los kilos que requiere(en todo caso de no querer realizar la venta presionar 0): ");
                                         kilos_ven = info.nextDouble();
-                                        if (kilos_ven < 0) {
+                                        if (kilos_ven <= -1) {
                                             System.out.println("ERROR. NO INGRESAR NEGATIVOS");
                                         } else if (kilos_ven == 0) {
                                             System.out.println("----VENTA CANCELADA----");
@@ -841,12 +853,13 @@ public class Carranza_esdras_tienda {
                             }
 
                         }
+                        //mayor venta 
                         if (subtotal_venta > mayor_venta) {
                             mayor_venta = subtotal_venta;
                             kilos_mayorventa = kilos_ven;
                             nombre_mayorventa = nom_producto;
                         }
-
+                        //calculo de los descuentos 
                         if (subtotal_total > 1000 && subtotal_total < 5000) {
                             descuento = subtotal_total * 0.05;
                             descuento_visual = 5;
@@ -861,14 +874,14 @@ public class Carranza_esdras_tienda {
 
                         total_venta = subtotal_total - descuento + impuesto;
                         total_ventas += total_venta;
-
+                        // proceso de facturacion 
                         System.out.println("----------FACTURA----------");
                         System.out.println(factura);
-                        System.out.println("subtotal de la ventas: " + subtotal_total);
-                        System.out.println("Descuento que se va aplicar : " + descuento_visual);
-                        System.out.println("Descuento ya aplicado en el subtotal : " + descuento);
-                        System.out.println("El impuesto sobre venta es del 7% ");
-                        System.out.println("Total: " + total_venta);
+                        System.out.println("Subtotal de las ventas: " + String.format("%.2f", subtotal_total));
+                        System.out.println("Descuento que se va a aplicar: " + String.format("%.2f", descuento_visual));
+                        System.out.println("Descuento ya aplicado en el subtotal: " + String.format("%.2f", descuento));
+                        System.out.println("El impuesto sobre venta es del 7%");
+                        System.out.println("Total: " + String.format("%.2f", total_venta));
                         factura = " ";
                         subtotal_total = 0;
                         descuento = 0;
@@ -877,6 +890,7 @@ public class Carranza_esdras_tienda {
                     }
 
                 }
+                //inicio de busqueda de producto estrella
                 for (int i = 0; i < 4; i++) {
                     double kilos_actual = 0;
                     String nombre_producto = "";
@@ -895,8 +909,12 @@ public class Carranza_esdras_tienda {
                         kilos_actual = kilos_maiz;
                         nombre_producto = "maiz";
                     }
-
-                    // Comparamos la cantidad actual con la cantidad mayor
+                    /*
+                    Este código compara las ventas de un producto actual con las ventas más altas registradas hasta el momento. 
+                    Si el producto actual tiene más ventas, se convierte en el más vendido. Si hay un empate en ventas, 
+                    el código agrega el nombre del producto a una lista de productos más vendidos. 
+                    Si hay varios productos empatados, los nombres se separan con "y".
+                     */
                     if (kilos_actual > kilos_mayor) {
                         kilos_mayor = kilos_actual;
                         producto_estrella = nombre_producto;
@@ -909,6 +927,16 @@ public class Carranza_esdras_tienda {
                         }
                     }
                 }
+                //Apartir de aqui empezamos la validaciones del ranking 
+                /*
+                
+                Este bloque de código determina cuál producto tiene la mayor cantidad de ventas y maneja los empates. 
+                Primero, compara las ventas de cada producto con la cantidad más alta registrada (primero). 
+                Si un producto tiene más ventas que primero, se actualiza primero y se guarda el nombre del producto en prod_primero. 
+                Si el producto tiene la misma cantidad de ventas que primero, se agrega su nombre a prod_primero para registrar el empate, 
+                separando los nombres con comas. 
+                Esto permite identificar todos los productos empatados en el primer lugar de ventas.
+                 */
                 if (kilos_azucar > primero) {
                     primero = kilos_azucar;
                     prod_primero = "Azucar";
@@ -1045,41 +1073,74 @@ public class Carranza_esdras_tienda {
                         }
 
                     }
-                    kilos_pro = 0; total_com = 0; cant_azucar = 0; cant_avena = 0; cant_trigo = 0; cant_maiz = 0; kilos_ven = 0; subtotal_venta = 0; descuento = 0;
-                impuesto = 0; total_venta = 0; ganacias = 0; total_compras = 0; total_ventas = 0; mayor_compra = 0; kilos_mayorcompra = 0; mayor_venta = 0; kilos_mayorventa = 0;
-                kilos_maiz = 0; kilos_trigo = 0; kilos_azucar = 0; kilos_avena = 0; kilos_mayor = 0; subtotal_total = 0; descuento_visual = 0;
-                promedio_ventas = 0; promedio_compras = 0;
-                nom_producto = "";nombre_mayorcom = "";nombre_mayorventa = "";producto_estrella = " ";factura = " ";
-                cant_ventas = 0;cant_compras = 0; nombre_mayorcom = "";
+                    kilos_pro = 0;
+                    total_com = 0;
+                    cant_azucar = 0;
+                    cant_avena = 0;
+                    cant_trigo = 0;
+                    cant_maiz = 0;
+                    kilos_ven = 0;
+                    subtotal_venta = 0;
+                    descuento = 0;
+                    impuesto = 0;
+                    total_venta = 0;
+                    ganacias = 0;
+                    total_compras = 0;
+                    total_ventas = 0;
+                    mayor_compra = 0;
+                    kilos_mayorcompra = 0;
+                    mayor_venta = 0;
+                    kilos_mayorventa = 0;
+                    kilos_maiz = 0;
+                    kilos_trigo = 0;
+                    kilos_azucar = 0;
+                    kilos_avena = 0;
+                    kilos_mayor = 0;
+                    subtotal_total = 0;
+                    descuento_visual = 0;
+                    promedio_ventas = 0;
+                    promedio_compras = 0;
+                    nom_producto = "";
+                    nombre_mayorcom = " ";
+                    nombre_mayorventa = "";
+                    producto_estrella = " ";
+                    factura = " ";
+                    cant_ventas = 0;
+                    cant_compras = 0;
+                    nombre_mayorcom = "";
                 }
 
             } else if (opcion == 4) {
+                if (caja_abierta == 0) {
+                    System.out.println("Abrir caja antes de ingresar reportes");
+                } else {
+                    promedio_ventas = total_ventas / cant_ventas;
+                    promedio_compras = total_compras / cant_compras;
+                    ganacias = total_ventas - total_compras;
+                    System.out.println(" ");
+                    System.out.println("Cantidad de efectivo al momento del cierre: " + cant_efectivo);
+                    System.out.println("Volumen de ventas del dia: " + total_ventas
+                            + "\n" + "Volumen de compras del dia: " + total_compras
+                            + "\n" + "Margen de ganancias: " + String.format("%.2f", ganacias)
+                            + "\n" + "Promedio de dinero obtenido de ventas: " + String.format("%.2f", promedio_ventas)
+                            + "\n" + "Promedio de dinero obtenido de compras: " + String.format("%.2f", promedio_compras)
+                            + "\n" + "Venta de mayor ganancia : " + nombre_mayorventa + " se gano: " + mayor_venta + "$. Kilos que se vendieron: " + kilos_mayorventa + "kg"
+                            + "\n" + "Compra de mayor gasto: " + nombre_mayorcom + " se gasto: " + mayor_compra + "$. kilos que se compraron: " + kilos_mayorcompra + "kg"
+                            + "\n" + "El producto estrella es: " + producto_estrella + " con " + kilos_mayor + " kilogramos vendidos."
+                            + "\n" + "Ranking:   ");
+                    if (primero > 0) {
+                        System.out.println("1 lugar: " + prod_primero + " (" + primero + " kilos)");
+                    }
+                    if (segundo > 0 && !prod_segundo.equals(prod_primero)) {
+                        System.out.println("2 lugar: " + prod_segundo + " (" + segundo + " kilos)");
+                    }
+                    if (tercero > 0 && !prod_tercero.equals(prod_primero) && !prod_tercero.equals(prod_segundo)) {
+                        System.out.println("3 lugar: " + prod_tercero + " (" + tercero + " kilos)");
+                    }
+                    if (cuarto > 0 && !prod_cuarto.equals(prod_primero) && !prod_cuarto.equals(prod_segundo) && !prod_cuarto.equals(prod_tercero)) {
+                        System.out.println("4 lugar: " + prod_cuarto + " (" + cuarto + " kilos)");
+                    }
 
-                promedio_ventas = total_ventas / cant_ventas;
-                promedio_compras = total_compras / cant_compras;
-                ganacias = total_ventas - total_compras;
-                System.out.println(" ");
-                System.out.println("Cantidad de efectivo al momento del cierre: " + cant_efectivo);
-                System.out.println("Cantidad de ventas del dia: " + cant_ventas
-                        + "\n" + "Cantidad de compras del dia: " + cant_compras
-                        + "\n" + "Margen de ganancias: " + ganacias
-                        + "\n" + "Promedio de dinero obtenido de ventas: " + promedio_ventas
-                        + "\n" + "Promedio de dinero obtenido de compras: " + promedio_compras
-                        + "\n" + "Venta de mayor ganancia : " + nombre_mayorventa + " se gasto: " + mayor_venta + "$. Kilos que se vendieron: " + kilos_mayorventa + "kg"
-                        + "\n" + "Compra de mayor gasto: " + nombre_mayorcom + " se gasto: " + mayor_compra + "$. kilos que se compraron: " + kilos_mayorcompra + "kg"
-                        + "\n" + "El producto estrella es: " + producto_estrella + " con " + kilos_mayor + " kilogramos vendidos."
-                        + "\n" + "Ranking:   ");
-                if (primero > 0) {
-                    System.out.println("1 lugar: " + prod_primero + " (" + primero + " kilos)");
-                }
-                if (segundo > 0 && !prod_segundo.equals(prod_primero)) {
-                    System.out.println("2 lugar: " + prod_segundo + " (" + segundo + " kilos)");
-                }
-                if (tercero > 0 && !prod_tercero.equals(prod_primero) && !prod_tercero.equals(prod_segundo)) {
-                    System.out.println("3 lugar: " + prod_tercero + " (" + tercero + " kilos)");
-                }
-                if (cuarto > 0 && !prod_cuarto.equals(prod_primero) && !prod_cuarto.equals(prod_segundo) && !prod_cuarto.equals(prod_tercero)) {
-                    System.out.println("4 lugar: " + prod_cuarto + " (" + cuarto + " kilos)");
                 }
 
             }
